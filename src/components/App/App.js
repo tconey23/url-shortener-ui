@@ -8,17 +8,25 @@ function App () {
   const [urls, setUrls] = useState([]);
 
   useEffect(() => {
+    const updateURLs = async () =>{
+     const fetchUrls = await getUrls()
+     setUrls(fetchUrls)
+    }
+    updateURLs()
+  }, [])
 
-  })
-
+  const addNewURL = (newURL) => {
+    let URLarray = urls.urls
+    URLarray.push(newURL)
+    setUrls({['urls']: URLarray})
+  }
   return (
     <main className="App">
       <header>
         <h1>URL Shortener</h1>
-        <UrlForm />
+        <UrlForm addNewURL={addNewURL}/>
       </header>
-
-      <UrlContainer urls={"<<<Urls should go here>>>"}/>
+     <UrlContainer urls={urls}/>
     </main>
   );
 }

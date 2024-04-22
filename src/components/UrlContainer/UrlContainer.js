@@ -2,19 +2,24 @@ import React from 'react';
 import './UrlContainer.css';
 
 const UrlContainer = props => {
-  const urlEls = props.urls.map(url => {
+  let urlEls
+  if(props.urls.urls){
+  urlEls = props.urls.urls.map(url => {
+    console.log(props)
     return (
       <div className="url">
         <h3>{url.title}</h3>
-        <a href={url.short_url} target="blank">{url.short_url}</a>
+        <a key={Date.now()} id={Date.now()} href={url.short_url} target="blank">{url.short_url}</a>
         <p>{url.long_url}</p>
       </div>
     )
   });
+}
 
   return (
     <section>
-      { urlEls.length ? urlEls : <p>No urls yet! Find some to shorten!</p> }
+      {!urlEls && <p>No urls yet! Find some to shorten!</p>}
+      {urlEls}
     </section>
   )
 }

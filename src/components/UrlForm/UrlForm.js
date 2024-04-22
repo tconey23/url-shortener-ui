@@ -1,12 +1,24 @@
 import React, { useState } from 'react';
+import { postUrls } from '../../apiCalls';
 
-function UrlForm() {
+function UrlForm({addNewURL}) {
   const [title, setTitle] = useState('');
-  const [urlToShorten, setUrlToShorten] = useState('');
+  const [long_url, setUrlToShorten] = useState('');
 
   const handleSubmit = e => {
     e.preventDefault();
+    const newUrl = {
+      id: Date.now(),
+      title,
+      long_url
+    }
+    postnewURL(newUrl)
     clearInputs();
+  }
+
+  const postnewURL = async (newUrl) => {
+    const updatedURLS = await postUrls(newUrl)
+    addNewURL(updatedURLS)
   }
 
   const clearInputs = () => {
@@ -21,15 +33,15 @@ function UrlForm() {
         placeholder='Title...'
         name='title'
         value={title}
-        // onChange={e => }
+        onChange={e => setTitle(e.target.value)}
       />
 
       <input
         type='text'
         placeholder='URL to Shorten...'
-        name='title'
-        value={title}
-        // onChange={e => }
+        name='URL'
+        value={long_url}
+        onChange={e => setUrlToShorten(e.target.value)}
       />
 
       <button onClick={e => handleSubmit(e)}>
